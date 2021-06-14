@@ -21,9 +21,9 @@ server.use(express.json());
 server.use(cors());
 
 // ******** ROUTES ************
-server.use('/experiences', experiencesRouter);
-server.use('/profiles', profilesRouter);
-server.use('/posts', postsRouter);
+server.use('api/experiences', experiencesRouter);
+server.use('api/profiles', profilesRouter);
+server.use('api/posts', postsRouter);
 
 // ******** ERROR MIDDLEWARES ************
 
