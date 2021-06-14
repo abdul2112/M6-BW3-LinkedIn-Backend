@@ -2,6 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import listEndpoints from 'express-list-endpoints';
 import mongoose from 'mongoose';
+import experiencesRouter from './services/experience';
+import profilesRouter from './services/profiles';
+import postsRouter from './services/posts';
+import {
+  badRequestErrorHandler,
+  catchAllErrorHandler,
+  notFoundErrorHandler,
+} from '../errorHandlers';
 
 const server = express();
 
@@ -13,8 +21,15 @@ server.use(express.json());
 server.use(cors());
 
 // ******** ROUTES ************
+server.use('/experiences', experiencesRouter);
+server.use('/profiles', profilesRouter);
+server.use('/posts', postsRouter);
 
 // ******** ERROR MIDDLEWARES ************
+
+server.use(badRequestErrorHandler);
+server.use(notFoundErrorHandler);
+server.use(catchAllErrorHandler);
 
 console.table(listEndpoints(server));
 
