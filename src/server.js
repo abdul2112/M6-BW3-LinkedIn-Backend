@@ -2,14 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import listEndpoints from 'express-list-endpoints';
 import mongoose from 'mongoose';
-import experiencesRouter from './services/experience';
-import profilesRouter from './services/profiles';
-import postsRouter from './services/posts';
+import profilesRouter from './services/profiles/index.js';
+import experiencesRouter from './services/experiences/index.js';
+import postsRouter from './services/posts/index.js';
 import {
   badRequestErrorHandler,
   catchAllErrorHandler,
   notFoundErrorHandler,
-} from '../errorHandlers';
+} from './errorHandlers.js';
 
 const server = express();
 
@@ -17,18 +17,18 @@ const port = process.env.PORT || 3001;
 
 // ******** MIDDLEWARES ************
 
-server.use(express.json());
 server.use(cors());
+server.use(express.json());
 
 // ******** ROUTES ************
-server.use('api/experiences', experiencesRouter);
-server.use('api/profiles', profilesRouter);
-server.use('api/posts', postsRouter);
+server.use("/api/profile", profilesRouter);
+server.use("/api/experience", experiencesRouter);
+server.use("/api/post", postsRouter);
 
 // ******** ERROR MIDDLEWARES ************
 
-server.use(badRequestErrorHandler);
 server.use(notFoundErrorHandler);
+server.use(badRequestErrorHandler);
 server.use(catchAllErrorHandler);
 
 console.table(listEndpoints(server));
