@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 //     "endDate": "2019-06-16T22:00:00.000Z", //could be null
 //     "description": "Doing stuff here and there",
 //     "area": "Berlin",
-//     "username": "admin",
+//     "user": "userId",
 //     "createdAt": "2019-09-30T19:58:31.019Z",  //server generated
 //     "updatedAt": "2019-09-30T19:58:31.019Z",  //server generated
 //     "image": ... //server generated on upload, set a default here
@@ -26,12 +26,12 @@ const ExperiencesSchema = new mongoose.Schema({
     required: true,
   },
   startDate: {
-    type: Number,
+    type: Date,
     required: true,
   },
   endDate: {
-    type: Number,
-    required: true,
+    type: Date,
+    required: false,
   },
   description: {
     type: String,
@@ -41,13 +41,15 @@ const ExperiencesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  username: {
-    type: String,
+  profile: {
+    type: Schema.Types.ObjectId,
     required: true,
+    ref: "Profile",
   },
   image: {
     type: String,
     required: true,
+    default: "https://ui-avatars.com/api/?name=Unnamed+User",
   },
 });
 
