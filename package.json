@@ -1,0 +1,40 @@
+{
+  "name": "m6-bw3-linkedin-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -r dotenv/config ./src/server.js",
+    "start": "node ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdul2112/M6-BW3-LinkedIn-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abdul2112/M6-BW3-LinkedIn-Backend/issues"
+  },
+  "homepage": "https://github.com/abdul2112/M6-BW3-LinkedIn-Backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-list-endpoints": "^5.0.0",
+    "fs-extra": "^10.0.0",
+    "http-errors": "^1.8.0",
+    "json2csv": "^5.0.6",
+    "mongoose": "^5.12.13",
+    "pdfmake": "^0.1.71",
+    "query-to-mongo": "^0.10.1",
+    "swagger-ui-express": "^4.1.6",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.7"
+  }
+}
