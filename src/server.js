@@ -22,7 +22,7 @@ server.use(express.json());
 
 // ******** ROUTES ************
 server.use("/api/profile", profilesRouter);
-server.use("/api/experience", experiencesRouter);
+server.use("/api/profile", experiencesRouter);
 server.use("/api/post", postsRouter);
 
 // ******** ERROR MIDDLEWARES ************

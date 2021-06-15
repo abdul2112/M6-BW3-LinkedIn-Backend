@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 //     "endDate": "2019-06-16T22:00:00.000Z", //could be null
 //     "description": "Doing stuff here and there",
 //     "area": "Berlin",
-//     "user": "userId",
+//     "username": "admin",
 //     "createdAt": "2019-09-30T19:58:31.019Z",  //server generated
 //     "updatedAt": "2019-09-30T19:58:31.019Z",  //server generated
 //     "image": ... //server generated on upload, set a default here
@@ -41,10 +41,12 @@ const ExperiencesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  profile: {
-    type: Schema.Types.ObjectId,
+  username: {
+    // type: Schema.Types.ObjectId,
+    // required: true,
+    // ref: "Profile",
+    type: String,
     required: true,
-    ref: "Profile",
   },
   image: {
     type: String,

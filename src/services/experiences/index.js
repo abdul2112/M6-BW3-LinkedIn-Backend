@@ -1,25 +1,16 @@
 import express from 'express';
 import ExperiencesSchema from './schema.js'
+import ProfilesModel from '../profiles/schema.js'
 
 const experiencesRouter = express.Router();
 
-experiencesRouter.get("/", async (req, res, next) => {
+experiencesRouter.get("/:userName/experiences", async (req, res, next) => {
     try {
-        const dbResponse = await ExperiencesSchema.find().populate({ path: "profile", select: "username name surname" });
-        res.send(dbResponse)
-    } catch (error) {
-        console.log(error)
-        next(error)
-    }
-})
-
-experiencesRouter.get("/:id", async (req, res, next) => {
-    try {
-        const dbResponse = await ExperiencesSchema.findById(req.params.id).populate({ path: "profile", select: "username name surname" });
+        const dbResponse = await ExperiencesSchema.find({ username: req.params.userName })
         if (dbResponse) {
             res.send(dbResponse)
         } else {
-            res.status(404).send(`${req.params.id} not found!`)
+            res.status(404).send(`${req.params.expId} not found!`)
         }
     } catch (error) {
         console.log(error)
@@ -27,37 +18,66 @@ experiencesRouter.get("/:id", async (req, res, next) => {
     }
 })
 
-experiencesRouter.post("/", async (req, res, next) => {
+experiencesRouter.get("/:userName/experiences/:expId", async (req, res, next) => {
     try {
-        const dbResponse = new ExperiencesSchema(req.body)
-        const { _id } = await dbResponse.save()
-
-        res.status(201).send(_id)
-    } catch (error) {
-        console.log(error)
-        next(error)
-    }
-})
-
-experiencesRouter.put("/:id", async (req, res, next) => {
-    try {
-        const dbResponse = await ExperiencesSchema.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
-        res.send(dbResponse)
-    } catch (error) {
-        console.log(error)
-        next(error)
-    }
-})
-
-experiencesRouter.delete("/:id", async (req, res, next) => {
-    try {
-        const dbResponse = await ExperiencesSchema.findByIdAndDelete(req.params.id)
+        const dbResponse = await ExperiencesSchema.find({ $and: [{ username: req.params.userName }, { _id: req.params.expId }] })
         if (dbResponse) {
-            res.status(204).send()
+            res.send(dbResponse)
         } else {
-            res.status(404).send(`${req.params.id} not found!`)
+            res.status(404).send(`${req.params.expId} not found!`)
         }
-        console.log(dbResponse)
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+experiencesRouter.post("/:userName/experiences", async (req, res, next) => {
+    try {
+        const dbResponse1 = await ProfilesModel.find({ username: req.params.userName })
+        if (dbResponse1.length > 0) {
+            const dbResponse2 = new ExperiencesSchema(req.body)
+            const { _id } = await dbResponse2.save()
+            res.status(201).send(_id)
+        } else {
+            res.status(404).send(`${req.params.userName} not found!`)
+        }
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+
+experiencesRouter.put("/:userName/experiences/:expId", async (req, res, next) => {
+    try {
+        const dbResponse1 = await ProfilesModel.find({ username: req.params.userName })
+        if (dbResponse1.length > 0) {
+            const dbResponse2 = await ExperiencesSchema.findByIdAndUpdate(req.params.expId, req.body, { new: true, runValidators: true })
+            res.send(dbResponse2)
+        } else {
+            res.status(404).send(`${req.params.userName} not found!`)
+        }
+
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+experiencesRouter.delete("/:userName/experiences/:expId", async (req, res, next) => {
+    try {
+        const dbResponse1 = await ProfilesModel.find({ username: req.params.userName })
+        if (dbResponse1.length > 0) {
+            const dbResponse = await ExperiencesSchema.findByIdAndDelete(req.params.expId)
+            if (dbResponse) {
+                res.status(204).send()
+            } else {
+                res.status(404).send(`${req.params.expId} not found!`)
+            }
+        } else {
+            res.status(404).send(`${req.params.userName} not found!`)
+        }
     } catch (error) {
         console.log(error)
         next(error)
