@@ -44,6 +44,31 @@ profilesRouter.post("/", async (req, res, next) => {
     }
 })
 
+profilesRouter.post(
+    '/:id/picture',
+    parseFile.single('pic'),
+    async (req, res, next) => {
+      try {
+        // console.log(req.file);
+        // console.log(req.file.path);
+        // res.send(req.file);
+        const dbResponse = await PostModel.findOneAndUpdate(
+          { id: req.params.id },
+          { image: req.file.path },
+          {
+            runValidators: true,
+            new: true,
+          }
+        );
+        res.send(dbResponse);
+      } catch (error) {
+        console.log(error);
+        next(error);
+      }
+    }
+  );
+  
+
  
 
 profilesRouter.put("/:id", async (req, res, next) => {
