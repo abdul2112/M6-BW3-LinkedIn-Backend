@@ -1,5 +1,10 @@
 import express from 'express';
+import { parseFile } from '../../utils/upload/index.js';
 import ProfilesModel from './schema.js'
+ 
+ 
+
+
 
 const profilesRouter = express.Router();
 
@@ -39,9 +44,23 @@ profilesRouter.post("/", async (req, res, next) => {
     }
 })
 
+ 
+
 profilesRouter.put("/:id", async (req, res, next) => {
     try {
         const dbResponse = await ProfilesModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        res.send(dbResponse)
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+profilesRouter.put("/:id/image", parseFile.single("image"), async (req, res, next) => {
+    try {
+        console.log(req.file)
+        res.send(req.file)
+        let dbResponse = await ProfilesModel.findOneAndUpdate({id:req.params.id}, {image:req.file.path});
         res.send(dbResponse)
     } catch (error) {
         console.log(error)
