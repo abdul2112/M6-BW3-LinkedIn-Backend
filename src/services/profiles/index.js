@@ -59,6 +59,7 @@ profilesRouter.put("/:id", async (req, res, next) => {
 profilesRouter.put("/:id/image", parseFile.single("image"), async (req, res, next) => {
     try {
         console.log(req.file)
+        console.log(req.file.path)
         res.send(req.file)
         let dbResponse = await ProfilesModel.findOneAndUpdate({id:req.params.id}, {image:req.file.path});
         res.send(dbResponse)
