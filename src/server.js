@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import experiencesRouter from './services/experiences/index.js';
 import profilesRouter from './services/profiles/index.js';
 import postsRouter from './services/posts/index.js';
+
+
 import {
   badRequestErrorHandler,
   catchAllErrorHandler,
@@ -19,6 +21,8 @@ const port = process.env.PORT || 3001;
 
 server.use(cors());
 server.use(express.json());
+ 
+
 
 // ******** ROUTES ************
 server.use('/api/profile', profilesRouter);
@@ -45,3 +49,5 @@ mongoose
     });
   })
   .catch((err) => console.log(err));
+
+  

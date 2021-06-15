@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -r dotenv/config ./src/server.js",
+    "dev": "npx kill-port 3001 && nodemon -r dotenv/config ./src/server.js",
     "start": "node ./src/server.js"
   },
   "repository": {
@@ -36,6 +36,7 @@
     "query-to-mongo": "^0.10.1",
     "streamifier": "^0.1.1",
     "swagger-ui-express": "^4.1.6",
+    "url": "^0.11.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
