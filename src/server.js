@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import listEndpoints from 'express-list-endpoints';
 import mongoose from 'mongoose';
-import experiencesRouter from './services/experience/index.js';
+import experiencesRouter from './services/experiences/index.js';
 import profilesRouter from './services/profiles/index.js';
 import postsRouter from './services/posts/index.js';
 import {

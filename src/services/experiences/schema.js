@@ -44,14 +44,14 @@ const ExperiencesSchema = new mongoose.Schema({
   username: {
     // type: Schema.Types.ObjectId,
     // required: true,
-    // ref: "Profile",
+    // ref: 'Profile',
     type: String,
     required: true,
   },
   image: {
     type: String,
     required: true,
-    default: "https://ui-avatars.com/api/?name=Unnamed+User",
+    default: 'https://ui-avatars.com/api/?name=Unnamed+User',
   },
 });
 

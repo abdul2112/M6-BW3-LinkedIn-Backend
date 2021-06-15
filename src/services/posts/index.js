@@ -1,6 +1,11 @@
 import express from 'express';
 import createError from 'http-errors';
 import PostModel from './schema.js';
+import multer from 'multer';
+// import streamifier from 'streamifier';
+import { parseFile } from '../../utils/cloudinary.js';
+// import { CloudinaryStorage } from 'multer-storage-cloudinary';
+
 const postsRouter = express.Router();
 
 // POSTS:
@@ -85,14 +90,28 @@ postsRouter
     }
   });
 
-// - POST https://yourapi.herokuapp.com/api/posts/{postId}
-// Add an image to the post under the name of "post"
-postsRouter.post('/:postId', async (req, res, next) => {
-  try {
-  } catch (error) {
-    console.log(error);
-    next(createError(500, 'An error occurred.....blogs'));
+postsRouter.post(
+  '/:postId/picture',
+  parseFile.single('pic'),
+  async (req, res, next) => {
+    try {
+      // console.log(req.file);
+      // console.log(req.file.path);
+      // res.send(req.file.path);
+      const dbResponse = await PostModel.findOneAndUpdate(
+        { _id: req.params.postId },
+        { image: req.file.path },
+        {
+          runValidators: true,
+          new: true,
+        }
+      );
+      res.send(dbResponse);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
   }
-});
+);
 
 export default postsRouter;

@@ -1,67 +1,71 @@
 import express from 'express';
-import ProfilesModel from './schema.js'
+import ProfilesModel from './schema.js';
 
 const profilesRouter = express.Router();
 
-profilesRouter.get("/", async (req, res, next) => {
-    try {
-        const dbResponse = await ProfilesModel.find({})
-        res.send(dbResponse)
-    } catch (error) {
-        console.log(error)
-        next(error)
-    }
-})
+profilesRouter.get('/', async (req, res, next) => {
+  try {
+    const dbResponse = await ProfilesModel.find({});
+    res.send(dbResponse);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
-profilesRouter.get("/:id", async (req, res, next) => {
-    try {
-        const dbResponse = await ProfilesModel.findById(req.params.id)
-        if (dbResponse) {
-            res.send(dbResponse)
-        } else {
-            res.status(404).send(`${req.params.id} not found!`)
-        }
-    } catch (error) {
-        console.log(error)
-        next(error)
+profilesRouter.get('/:id', async (req, res, next) => {
+  try {
+    const dbResponse = await ProfilesModel.findById(req.params.id);
+    if (dbResponse) {
+      res.send(dbResponse);
+    } else {
+      res.status(404).send(`${req.params.id} not found!`);
     }
-})
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
-profilesRouter.post("/", async (req, res, next) => {
-    try {
-        const dbResponse = new ProfilesModel(req.body)
-        const { _id } = await dbResponse.save()
+profilesRouter.post('/', async (req, res, next) => {
+  try {
+    const dbResponse = new ProfilesModel(req.body);
+    const { _id } = await dbResponse.save();
 
-        res.status(201).send(_id)
-    } catch (error) {
-        console.log(error)
-        next(error)
+    res.status(201).send(_id);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+profilesRouter.put('/:id', async (req, res, next) => {
+  try {
+    const dbResponse = await ProfilesModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    res.send(dbResponse);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+profilesRouter.delete('/:id', async (req, res, next) => {
+  try {
+    const dbResponse = await ProfilesModel.findByIdAndDelete(req.params.id);
+    if (dbResponse) {
+      res.send('This profile is deleted ->' + dbResponse);
+    } else {
+      res.status(404).send(`${req.params.id} not found!`);
     }
-})
-
-profilesRouter.put("/:id", async (req, res, next) => {
-    try {
-        const dbResponse = await ProfilesModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
-        res.send(dbResponse)
-    } catch (error) {
-        console.log(error)
-        next(error)
-    }
-})
-
-profilesRouter.delete("/:id", async (req, res, next) => {
-    try {
-        const dbResponse = await ProfilesModel.findByIdAndDelete(req.params.id)
-        if (dbResponse) {
-            res.status(204).send()
-        } else {
-            res.status(404).send(`${req.params.id} not found!`)
-        }
-        console.log(dbResponse)
-    } catch (error) {
-        console.log(error)
-        next(error)
-    }
-})
+    console.log(dbResponse);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
 export default profilesRouter;
