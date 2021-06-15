@@ -17,18 +17,18 @@ const port = process.env.PORT || 3001;
 
 // ******** MIDDLEWARES ************
 
-server.use(express.json());
 server.use(cors());
+server.use(express.json());
 
 // ******** ROUTES ************
-server.use('/api/experiences', experiencesRouter);
-server.use('/api/profiles', profilesRouter);
-server.use('/api/posts', postsRouter);
+server.use('/api/profile', profilesRouter);
+server.use('/api/profile', experiencesRouter);
+server.use('/api/post', postsRouter);
 
 // ******** ERROR MIDDLEWARES ************
 
-server.use(badRequestErrorHandler);
 server.use(notFoundErrorHandler);
+server.use(badRequestErrorHandler);
 server.use(catchAllErrorHandler);
 
 console.table(listEndpoints(server));

@@ -26,12 +26,12 @@ const ExperiencesSchema = new mongoose.Schema({
     required: true,
   },
   startDate: {
-    type: Number,
+    type: Date,
     required: true,
   },
   endDate: {
-    type: Number,
-    required: true,
+    type: Date,
+    required: false,
   },
   description: {
     type: String,
@@ -42,12 +42,16 @@ const ExperiencesSchema = new mongoose.Schema({
     required: true,
   },
   username: {
+    // type: Schema.Types.ObjectId,
+    // required: true,
+    // ref: "Profile",
     type: String,
     required: true,
   },
   image: {
     type: String,
     required: true,
+    default: "https://ui-avatars.com/api/?name=Unnamed+User",
   },
 });
 

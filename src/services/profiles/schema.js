@@ -16,7 +16,7 @@ import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
 
-const ProfilesSchema = new mongoose.Schema({
+const ProfilesSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -44,11 +44,14 @@ const ProfilesSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
+    default: "https://ui-avatars.com/api/?name=Unnamed+User",
   },
   username: {
     type: String,
     required: true,
   },
-});
+},
+  { timestamps: true }
+);
 
-export default model('Post', ProfilesSchema);
+export default model('Profile', ProfilesSchema);
