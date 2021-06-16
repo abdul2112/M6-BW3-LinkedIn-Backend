@@ -63,8 +63,16 @@ mongoose
   })
   .then(() => {
     console.log('Connected to Mongodb 🌵');
-    server.listen(port, () => {
-      console.log('Server listening on port', port, '✅');
+    server.listen(process.env.PORT || 3000, function () {
+      console.log(
+        'Express server listening on port %d in %s mode',
+        this.address().port,
+        server.settings.env
+      );
     });
   })
   .catch((err) => console.log(err));
+
+// server.listen(port, () => {
+//   console.log('Server listening on port', port, '✅');
+// });
