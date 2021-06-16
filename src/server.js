@@ -14,7 +14,7 @@ import {
 
 const server = express();
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 
 // ******** MIDDLEWARES ************
 
@@ -63,16 +63,8 @@ mongoose
   })
   .then(() => {
     console.log('Connected to Mongodb 🌵');
-    server.listen(process.env.PORT || 3000, function () {
-      console.log(
-        'Express server listening on port %d in %s mode',
-        this.address().port,
-        server.settings.env
-      );
+    server.listen(port, () => {
+      console.log('Server listening on port', port, '✅');
     });
   })
   .catch((err) => console.log(err));
-
-// server.listen(port, () => {
-//   console.log('Server listening on port', port, '✅');
-// });
