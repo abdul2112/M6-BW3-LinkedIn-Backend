@@ -1,5 +1,5 @@
 import express from 'express';
-import { parseFile } from '../../utils/upload/index.js';
+import { parseFile } from '../../utils/cloudinary.js';
 import ProfilesModel from './schema.js';
 import { generatePDF } from '../../utils/pdf/index.js';
 import ExperiencesModel from '../experiences/schema.js';
