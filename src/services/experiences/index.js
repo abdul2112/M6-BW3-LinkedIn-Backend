@@ -18,6 +18,7 @@ experiencesRouter.get("/:userName/experiences", async (req, res, next) => {
     }
 })
 
+
 experiencesRouter.get("/:userName/experiences/:expId", async (req, res, next) => {
     try {
         const dbResponse = await ExperiencesSchema.find({ $and: [{ username: req.params.userName }, { _id: req.params.expId }] })
@@ -48,7 +49,6 @@ experiencesRouter.post("/:userName/experiences", async (req, res, next) => {
     }
 })
 
-
 experiencesRouter.put("/:userName/experiences/:expId", async (req, res, next) => {
     try {
         const dbResponse1 = await ProfilesModel.find({ username: req.params.userName })
@@ -65,13 +65,15 @@ experiencesRouter.put("/:userName/experiences/:expId", async (req, res, next) =>
     }
 })
 
+// TODO  get delete for experiencesRouter (Add body to Response)
+
 experiencesRouter.delete("/:userName/experiences/:expId", async (req, res, next) => {
     try {
         const dbResponse1 = await ProfilesModel.find({ username: req.params.userName })
         if (dbResponse1.length > 0) {
             const dbResponse = await ExperiencesSchema.findByIdAndDelete(req.params.expId)
             if (dbResponse) {
-                res.status(204).send()
+                res.send(`this one deleted: ${dbResponse}`)
             } else {
                 res.status(404).send(`${req.params.expId} not found!`)
             }
@@ -83,5 +85,6 @@ experiencesRouter.delete("/:userName/experiences/:expId", async (req, res, next)
         next(error)
     }
 })
+
 
 export default experiencesRouter;
