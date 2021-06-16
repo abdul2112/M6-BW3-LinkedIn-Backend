@@ -1,12 +1,12 @@
-import express from "express";
-import { parseFile } from "../../utils/cloudinary.js";
-import ProfilesModel from "./schema.js";
-import { generatePDF } from "../../utils/pdf/index.js";
-import ExperiencesModel from "../experiences/schema.js";
+import express from 'express';
+import { parseFile } from '../../utils/cloudinary.js';
+import ProfilesModel from './schema.js';
+import { generatePDF } from '../../utils/pdf/index.js';
+import ExperiencesModel from '../experiences/schema.js';
 
 const profilesRouter = express.Router();
 
-profilesRouter.get("/", async (req, res, next) => {
+profilesRouter.get('/', async (req, res, next) => {
   try {
     const dbResponse = await ProfilesModel.find({});
     res.send(dbResponse);
@@ -16,7 +16,7 @@ profilesRouter.get("/", async (req, res, next) => {
   }
 });
 
-profilesRouter.get("/:id", async (req, res, next) => {
+profilesRouter.get('/:id', async (req, res, next) => {
   try {
     const dbResponse = await ProfilesModel.findById(req.params.id);
     if (dbResponse) {
@@ -30,7 +30,7 @@ profilesRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-profilesRouter.get("/:id/pdf", async (req, res, next) => {
+profilesRouter.get('/:id/pdf', async (req, res, next) => {
   try {
     const profile = await ProfilesModel.findById(req.params.id);
     if (profile) {
@@ -39,14 +39,14 @@ profilesRouter.get("/:id/pdf", async (req, res, next) => {
       });
       console.log(experiences);
       console.log(profile);
-      if (experience.length>0) {
+      if (experience.length > 0) {
         const pdfStream = await generatePDF(profile, experiences);
-        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader('Content-Type', 'application/pdf');
         pdfStream.pipe(res);
         pdfStream.end();
-      }else{
+      } else {
         const pdfStream = await generatePDF(profile);
-        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader('Content-Type', 'application/pdf');
         pdfStream.pipe(res);
         pdfStream.end();
       }
@@ -60,7 +60,7 @@ profilesRouter.get("/:id/pdf", async (req, res, next) => {
   }
 });
 
-profilesRouter.post("/", async (req, res, next) => {
+profilesRouter.post('/', async (req, res, next) => {
   try {
     const dbResponse = new ProfilesModel(req.body);
     const { _id } = await dbResponse.save();
@@ -73,8 +73,8 @@ profilesRouter.post("/", async (req, res, next) => {
 });
 
 profilesRouter.post(
-  "/:id/picture",
-  parseFile.single("image"),
+  '/:id/picture',
+  parseFile.single('image'),
   async (req, res, next) => {
     try {
       // console.log(req.file);
@@ -96,7 +96,7 @@ profilesRouter.post(
   }
 );
 
-profilesRouter.put("/:id", async (req, res, next) => {
+profilesRouter.put('/:id', async (req, res, next) => {
   try {
     const dbResponse = await ProfilesModel.findByIdAndUpdate(
       req.params.id,
@@ -111,8 +111,8 @@ profilesRouter.put("/:id", async (req, res, next) => {
 });
 
 profilesRouter.put(
-  "/:id/image",
-  parseFile.single("image"),
+  '/:id/image',
+  parseFile.single('image'),
   async (req, res, next) => {
     try {
       console.log(req.file);
@@ -130,7 +130,7 @@ profilesRouter.put(
   }
 );
 
-profilesRouter.delete("/:id", async (req, res, next) => {
+profilesRouter.delete('/:id', async (req, res, next) => {
   try {
     const dbResponse = await ProfilesModel.findByIdAndDelete(req.params.id);
     if (dbResponse) {
