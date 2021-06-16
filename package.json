@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx kill-port 3001 && nodemon -r dotenv/config ./src/server.js",
+    "dev": "nodemon -r dotenv/config ./src/server.js",
     "start": "node ./src/server.js"
   },
   "repository": {
@@ -26,6 +26,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-list-endpoints": "^5.0.0",
+    "fs": "0.0.1-security",
     "fs-extra": "^10.0.0",
     "http-errors": "^1.8.0",
     "json2csv": "^5.0.6",
@@ -34,6 +35,7 @@
     "multer-storage-cloudinary": "^4.0.0",
     "pdfmake": "^0.1.71",
     "query-to-mongo": "^0.10.1",
+    "stream": "0.0.2",
     "streamifier": "^0.1.1",
     "striptags": "^3.1.1",
     "swagger-ui-express": "^4.1.6",

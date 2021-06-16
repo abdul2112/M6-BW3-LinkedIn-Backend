@@ -33,15 +33,15 @@ const PostsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // profile: {
-  //   type: Schema.Types.ObjectId,
-  //   required: true,
-  //   ref: 'Profile',
-  // },
   image: {
     type: String,
     required: true,
     default: 'https://placeholdit.com/150x150',
+  },
+  profile: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Profile',
   },
 });
 
