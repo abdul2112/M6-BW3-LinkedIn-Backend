@@ -10,9 +10,25 @@ const fonts = {
   },
 };
 
+const getExperiences = (experience) =>{
+  const body = experience.reduce((acc,item) => {
+   let header = { text: item.company + '-' + item.area, style: 'normal' }
+   let list = {
+     ul: [
+       item.startDate + ' ' + item.endDate,
+       item.role,
+       item.description,
+     ]
+   }
+   acc.push(header)
+   acc.push(list)
+   return acc},[])
+  return body
+}
+
 const printer = new PdfPrinter(fonts);
 
-export const generatePDF = async (profile, experiences) => {
+export const generatePDF = async (profile, experience) => {
   let imagePart = {};
   if (profile.image) {
     const response = await axios.get(profile.image, {
@@ -33,13 +49,12 @@ export const generatePDF = async (profile, experiences) => {
      { text: profile.email, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
      { text: profile.bio, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
 
-       { text: experience.image, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
-       { text: experience.role, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
-       { text: experience.company, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
-       { text: experience.startDate, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
-       { text: experience.endDate, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
-       { text: experience.description, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
-       { text: experience.area, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
+     {
+      text: "Experience",
+      style: 'subheader'
+    },
+
+    getExperiences(experience)
 
     ],
   };
