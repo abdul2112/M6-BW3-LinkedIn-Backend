@@ -46,7 +46,7 @@ server.use(express.json());
 // ******** ROUTES ************
 server.use('/api/profile', profilesRouter);
 server.use('/api/profile', experiencesRouter);
-server.use('/api/post', postsRouter);
+server.use('/api/posts', postsRouter);
 
 // ******** ERROR MIDDLEWARES ************
 
