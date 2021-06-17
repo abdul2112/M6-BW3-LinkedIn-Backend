@@ -14,7 +14,7 @@ import {
 
 const server = express();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 // ******** MIDDLEWARES ************
 
@@ -37,6 +37,7 @@ const corsOptions = {
   },
 };
 
+server.use(cors());
 server.use(cors(corsOptions));
 
 // server.use(cors());
