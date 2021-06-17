@@ -1,10 +1,7 @@
 import express from 'express';
 import createError from 'http-errors';
 import PostModel from './schema.js';
-import multer from 'multer';
-// import streamifier from 'streamifier';
 import { parseFile } from '../../utils/cloudinary.js';
-// import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 const postsRouter = express.Router();
 
@@ -34,7 +31,10 @@ postsRouter
   })
   .get('/', async (req, res, next) => {
     try {
-      const dbResponse = await PostModel.find();
+      const dbResponse = await PostModel.find().populate({
+        path: 'profile',
+        select: 'name surname image',
+      });
       console.log(req.body);
       res.status(201).send(dbResponse);
     } catch (error) {
@@ -46,8 +46,10 @@ postsRouter
 postsRouter
   .get('/:postId', async (req, res, next) => {
     try {
-      // const id = req.params.postId;
-      const dbResponse = await PostModel.findById(req.params.postId);
+      const dbResponse = await PostModel.findById(req.params.postId).populate({
+        path: 'profile',
+        select: 'name surname image',
+      });
       console.log(req.body);
       res.send(dbResponse);
     } catch (error) {
