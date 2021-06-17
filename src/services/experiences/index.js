@@ -92,7 +92,7 @@ experiencesRouter.get('/:profileId/experiences/:expId', async (req, res, next) =
     try {
       const dbResponse = await ExperiencesModel.find({
         $and: [{ profile: req.params.profileId }, { _id: req.params.expId }],
-      });
+      }).populate({ path: "profile" })
       if (dbResponse) {
         res.send(dbResponse[0]);
       } else {
