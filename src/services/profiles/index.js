@@ -18,7 +18,7 @@ profilesRouter.get('/', async (req, res, next) => {
 
 profilesRouter.get('/:id', async (req, res, next) => {
   try {
-    const dbResponse = await ProfilesModel.findById(req.params.id);
+    const dbResponse = await ProfilesModel.findById(req.params.id)
     if (dbResponse) {
       res.send(dbResponse);
     } else {
