@@ -1,16 +1,21 @@
-import fs from 'fs';
-import multer from 'multer';
-import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
+
+import multer from "multer";
+
+import { v2 as cloudinary } from "cloudinary";
+
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+
+const { CLOUDINARY_NAME, CLOUDINARY_KEY, CLOUDINARY_SECRET } = process.env;
+
+cloudinary.config({
+  cloud_name: CLOUDINARY_NAME,
+  api_key: CLOUDINARY_KEY,
+  api_secret: CLOUDINARY_SECRET,
+});
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
 });
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-});
 
 export const parseFile = multer({ storage });
