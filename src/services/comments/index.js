@@ -13,7 +13,6 @@ const commentsRouter = express.Router();
 // - PUT https://striveschool-api.herokuapp.com/api/posts/{id}/comment/{commentId}
 // Edit a given comment
 
-
 // ************* CRUD Endpoint *************
 commentsRouter.post('/:postId/comment', async (req, res, next) => {
     try {

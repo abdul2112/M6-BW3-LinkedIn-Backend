@@ -1,13 +1,12 @@
 import mongoose from 'mongoose';
 
 // {
-//   "_id": "5d84937322b7b54d848eb41b", //server generated
-//   "createdAt": "2019-09-20T08:53:07.094Z", //server generated
-//   "updatedAt": "2019-09-20T09:00:46.977Z", //server generated
-//   "comment": "I totally agree with you! Great post!",
-//   //user who posted it (as reference? nested? Your choice!)
-//   //post (as reference? nested? your choice)
-// }
+//   "_id": "5d925e677360c41e0046d1f5",  //server generated
+//   //user who liked it (as reference? nested? Your choice!)
+//   //post liked (as reference? nested? Your choice!)
+//   "createdAt": "2019-09-30T19:58:31.019Z",  //server generated
+//   "updatedAt": "2019-09-30T19:58:31.019Z",  //server generated
+// }   
 
 const { Schema, model } = mongoose;
 

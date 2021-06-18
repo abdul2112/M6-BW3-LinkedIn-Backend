@@ -48,7 +48,7 @@ server.use(express.json());
 server.use('/api/profile', profilesRouter);
 server.use('/api/profile', experiencesRouter);
 server.use('/api/posts', postsRouter);
-server.use('/api/likes', likesRouter);
+server.use('/api/posts', likesRouter);
 
 // ******** ERROR MIDDLEWARES ************
 
