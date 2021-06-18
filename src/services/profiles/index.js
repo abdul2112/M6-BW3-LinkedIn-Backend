@@ -18,7 +18,7 @@ profilesRouter.get('/', async (req, res, next) => {
 
 profilesRouter.get('/:id', async (req, res, next) => {
   try {
-    const dbResponse = await ProfilesModel.findById(req.params.id)
+    const dbResponse = await ProfilesModel.findById(req.params.id);
     if (dbResponse) {
       res.send(dbResponse);
     } else {
@@ -56,6 +56,7 @@ profilesRouter.get('/:id/pdf', async (req, res, next) => {
         .send({ message: `profile with ${req.params.id} is not found!` });
     }
   } catch (error) {
+    console.log(error);
     res.sendStatus(status).send({ message: error.message });
   }
 });
