@@ -18,7 +18,7 @@ profilesRouter.get('/', async (req, res, next) => {
 
 profilesRouter.get('/:id', async (req, res, next) => {
   try {
-    const dbResponse = await ProfilesModel.findById(req.params.id)
+    const dbResponse = await ProfilesModel.findById(req.params.id);
     if (dbResponse) {
       res.send(dbResponse);
     } else {
@@ -35,9 +35,12 @@ profilesRouter.get('/:id/pdf', async (req, res, next) => {
     const profile = await ProfilesModel.findById(req.params.id);
     if (profile) {
       const experience = await ExperiencesModel.find({
-        username: profile.username,
+        profile: req.params.id
       });
-      console.log(experience);
+
+      console.log("--------------------------------------");
+      console.log("experience:", experience);
+      console.log("--------------------------------------");
       console.log(profile);
       if (experience.length > 0) {
         const pdfStream = await generatePDF(profile, experience);
@@ -56,6 +59,7 @@ profilesRouter.get('/:id/pdf', async (req, res, next) => {
         .send({ message: `profile with ${req.params.id} is not found!` });
     }
   } catch (error) {
+    console.log(error);
     res.sendStatus(status).send({ message: error.message });
   }
 });
