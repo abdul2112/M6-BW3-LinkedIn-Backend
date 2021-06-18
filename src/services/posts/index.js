@@ -1,6 +1,8 @@
 import express from 'express';
 import createError from 'http-errors';
 import PostModel from './schema.js';
+import LikesModel from '../likes/schema.js';
+
 import { parseFile } from '../../utils/cloudinary.js';
 
 const postsRouter = express.Router();
@@ -21,7 +23,6 @@ postsRouter
   .post('/', async (req, res, next) => {
     try {
       const dbResponse = new PostModel(req.body);
-      console.log(req.body);
       const { _id } = await dbResponse.save();
       res.status(201).send(_id);
     } catch (error) {
@@ -34,8 +35,8 @@ postsRouter
       const dbResponse = await PostModel.find().populate({
         path: 'profile',
         select: 'name surname image',
-      });
-      console.log(req.body);
+      })
+      // .populate('like');
       res.status(201).send(dbResponse);
     } catch (error) {
       console.log(error);
@@ -46,12 +47,16 @@ postsRouter
 postsRouter
   .get('/:postId', async (req, res, next) => {
     try {
-      const dbResponse = await PostModel.findById(req.params.postId).populate({
-        path: 'profile',
-        select: 'name surname image',
-      });
-      console.log(req.body);
-      res.send(dbResponse);
+      const post = await PostModel.findById(req.params.postId)
+        .populate({
+          path: 'profile',
+          select: 'name surname image',
+        })
+
+      // const likes = await LikesModel.countDocuments({ post: req.params.postId });
+
+      // res.send({post, likes});
+      res.send(post);
     } catch (error) {
       console.log(error);
       next(createError(500, 'An error occurred while getting post'));

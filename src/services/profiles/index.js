@@ -35,9 +35,12 @@ profilesRouter.get('/:id/pdf', async (req, res, next) => {
     const profile = await ProfilesModel.findById(req.params.id);
     if (profile) {
       const experience = await ExperiencesModel.find({
-        username: profile.username,
+        profile: req.params.id
       });
-      console.log(experience);
+
+      console.log("--------------------------------------");
+      console.log("experience:", experience);
+      console.log("--------------------------------------");
       console.log(profile);
       if (experience.length > 0) {
         const pdfStream = await generatePDF(profile, experience);

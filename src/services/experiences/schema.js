@@ -55,6 +55,8 @@ const ExperiencesSchema = new mongoose.Schema({
     required: true,
     ref: "Profile",
   },
-});
+},
+  { timestamps: true }
+);
 
 export default model('Experience', ExperiencesSchema);
