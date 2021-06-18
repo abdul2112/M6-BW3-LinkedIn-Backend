@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import experiencesRouter from './services/experiences/index.js';
 import profilesRouter from './services/profiles/index.js';
 import postsRouter from './services/posts/index.js';
+import likesRouter from './services/likes/index.js';
 
 import {
   badRequestErrorHandler,
@@ -47,6 +48,7 @@ server.use(express.json());
 server.use('/api/profile', profilesRouter);
 server.use('/api/profile', experiencesRouter);
 server.use('/api/posts', postsRouter);
+server.use('/api/likes', likesRouter);
 
 // ******** ERROR MIDDLEWARES ************
 

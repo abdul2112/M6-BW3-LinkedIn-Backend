@@ -43,6 +43,8 @@ const PostsSchema = new mongoose.Schema({
     required: true,
     ref: 'Profile',
   },
-});
+},
+  { timestamps: true }
+);
 
 export default model('Post', PostsSchema);
