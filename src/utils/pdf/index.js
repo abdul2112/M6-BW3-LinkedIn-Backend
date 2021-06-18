@@ -10,20 +10,26 @@ const fonts = {
   },
 };
 
-const getExperiences = (experience) =>{
-  const body = experience.reduce((acc,item) => {
-   let header = { text: item.company + '-' + item.area, style: 'normal' }
-   let list = {
-     ul: [
-       item.startDate + ' ' + item.endDate,
-       item.role,
-       item.description,
-     ]
-   }
-   acc.push(header)
-   acc.push(list)
-   return acc},[])
-  return body
+const getExperiences = (experience) => {
+  if (experience !== undefined) {
+    const body = experience.reduce((acc, item) => {
+      let header = { text: item.company + '-' + item.area, style: 'normal' }
+      let list = {
+        ul: [
+          item.startDate + ' ' + item.endDate,
+          item.role,
+          item.description,
+        ]
+      }
+      acc.push(header)
+      acc.push(list)
+      return acc
+    }, [])
+    return body
+  } else {
+    return "no experience"
+  }
+
 }
 
 const printer = new PdfPrinter(fonts);
@@ -44,17 +50,17 @@ export const generatePDF = async (profile, experience) => {
   const docDefinition = {
     content: [
       imagePart,
-     { text: profile.name, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
-     { text: profile.surname, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
-     { text: profile.email, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
-     { text: profile.bio, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
+      { text: profile.name, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
+      { text: profile.surname, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
+      { text: profile.email, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
+      { text: profile.bio, fontSize: 20, bold: true, margin: [0, 0, 0, 40] },
 
-     {
-      text: "Experience",
-      style: 'subheader'
-    },
+      {
+        text: "Experience",
+        style: 'subheader'
+      },
 
-    getExperiences(experience)
+      getExperiences(experience)
 
     ],
   };
