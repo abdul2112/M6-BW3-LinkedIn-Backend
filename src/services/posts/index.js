@@ -35,7 +35,7 @@ postsRouter
       const dbResponse = await PostModel.find().populate({
         path: 'profile',
         select: 'name surname image',
-      })
+      });
       // .populate('like');
       res.status(201).send(dbResponse);
     } catch (error) {
@@ -47,14 +47,11 @@ postsRouter
 postsRouter
   .get('/:postId', async (req, res, next) => {
     try {
-      const post = await PostModel.findById(req.params.postId)
-        .populate({
-          path: 'profile',
-          select: 'name surname image',
-        })
-
+      const post = await PostModel.findById(req.params.postId).populate({
+        path: 'profile',
+        select: 'name surname image',
+      });
       // const likes = await LikesModel.countDocuments({ post: req.params.postId });
-
       // res.send({post, likes});
       res.send(post);
     } catch (error) {
@@ -86,7 +83,6 @@ postsRouter
     try {
       const dbResponse = await PostModel.findByIdAndDelete(req.params.postId);
       if (dbResponse) {
-        // res.send('Post has been DELETED');
         res.send('This post is deleted ->' + dbResponse);
       } else {
         next(createError(404, `post with id ${req.params.postId} not found`));
@@ -102,9 +98,6 @@ postsRouter.post(
   parseFile.single('pic'),
   async (req, res, next) => {
     try {
-      // console.log(req.file);
-      // console.log(req.file.path);
-      // res.send(req.file.path);
       const dbResponse = await PostModel.findOneAndUpdate(
         { _id: req.params.postId },
         { image: req.file.path },

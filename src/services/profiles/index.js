@@ -35,13 +35,8 @@ profilesRouter.get('/:id/pdf', async (req, res, next) => {
     const profile = await ProfilesModel.findById(req.params.id);
     if (profile) {
       const experience = await ExperiencesModel.find({
-        profile: req.params.id
+        profile: req.params.id,
       });
-
-      console.log("--------------------------------------");
-      console.log("experience:", experience);
-      console.log("--------------------------------------");
-      console.log(profile);
       if (experience.length > 0) {
         const pdfStream = await generatePDF(profile, experience);
         res.setHeader('Content-Type', 'application/pdf');
@@ -68,7 +63,6 @@ profilesRouter.post('/', async (req, res, next) => {
   try {
     const dbResponse = new ProfilesModel(req.body);
     const { _id } = await dbResponse.save();
-
     res.status(201).send(_id);
   } catch (error) {
     console.log(error);
@@ -81,9 +75,6 @@ profilesRouter.post(
   parseFile.single('image'),
   async (req, res, next) => {
     try {
-      // console.log(req.file);
-      // console.log(req.file.path);
-      // res.send(req.file);
       const dbResponse = await ProfilesModel.findOneAndUpdate(
         { _id: req.params.id },
         { image: req.file.path },
@@ -113,26 +104,6 @@ profilesRouter.put('/:id', async (req, res, next) => {
     next(error);
   }
 });
-
-profilesRouter.put(
-  '/:id/image',
-  parseFile.single('image'),
-  async (req, res, next) => {
-    try {
-      console.log(req.file);
-      console.log(req.file.path);
-      res.send(req.file);
-      let dbResponse = await ProfilesModel.findOneAndUpdate(
-        { id: req.params.id },
-        { image: req.file.path }
-      );
-      res.send(dbResponse);
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  }
-);
 
 profilesRouter.delete('/:id', async (req, res, next) => {
   try {
