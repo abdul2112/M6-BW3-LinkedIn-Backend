@@ -53,9 +53,10 @@ postsRouter
           select: 'name surname image',
         })
 
-      const likes = await LikesModel.countDocuments({ post: req.params.postId });
+      // const likes = await LikesModel.countDocuments({ post: req.params.postId });
 
-      res.send({post, likes});
+      // res.send({post, likes});
+      res.send(post);
     } catch (error) {
       console.log(error);
       next(createError(500, 'An error occurred while getting post'));
